@@ -1,0 +1,20 @@
+
+%  The following command loads a graphics package to include images 
+%  in the document. It may be necessary to specify a DVI driver option,
+%  e.g., [dvips], but that may be inappropriate for some LaTeX 
+%  installations. 
+\usepackage[]{graphicx}
+
+% Clever cross referencing. Using cleverref, instead of writting 
+% figure~\ref{...} or equation~\ref{...}, only \cref{...} is required.
+% The package interprates the references and introduces the figure, fig.,
+% equation, eq., etc keywords. \Cref forces first letter capital. 
+\usepackage{cleveref}
+
+% In order to include files without having a clear page using \include*, 
+% the newclude package is required
+\usepackage{newclude}
+
+% Required for acronyms
+\usepackage{acro}
+

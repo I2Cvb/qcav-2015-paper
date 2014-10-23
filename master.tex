@@ -1,4 +1,4 @@
-%  article.tex (Version 3.2, released 17 April 2007)
+%  article.tex (Version 3.3, released 19 January 2008)
 %  Article to demonstrate format for SPIE Proceedings
 %  Special instructions are included in this file after the
 %  symbol %>>>>
@@ -12,72 +12,43 @@
 %  The bibliography style file is called spiebib.bst, 
 %  which replaces the standard style unstr.bst.  
 
-\documentclass[]{spie}  %>>> use for US letter paper
+\documentclass[letter]{spie}  %>>> use for US letter paper
 %%\documentclass[a4paper]{spie}  %>>> use this instead for A4 paper
 %%\documentclass[nocompress]{spie}  %>>> to avoid compression of citations
 %% \addtolength{\voffset}{9mm}   %>>> moves text field down
 %% \renewcommand{\baselinestretch}{1.65}   %>>> 1.65 for double spacing, 1.25 for 1.5 spacing 
-%  The following command loads a graphics package to include images 
-%  in the document. It may be necessary to specify a DVI driver option,
-%  e.g., [dvips], but that may be inappropriate for some LaTeX 
-%  installations. 
 
+%% Latex documents that need direct input
+\input{latex/filesystem/package.tex}        % contains the latex packages
+\input{content/frontmatter.tex}             % contains the Title and Autor info
+\input{latex/filesystem/fileSetup.tex}      % contains package and variables init.
+\input{content/acronym_definition.tex}      % contains the acronims 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% INSERT HERE WHATEVER IS FILE SYSTEMS
-
-%% Insert the file with all the package used in this file
-\input{100_file_system/packages}
-
-%% Insert the acronym definition
-\input{100_file_system/acronym_definition}
-
-%% Option for the bibtex file
-%% \input{bibtex/bibtex_option}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%>>>> uncomment following for page numbers
-% \pagestyle{plain}    
-%>>>> uncomment following to start page numbering at 301 
-%\setcounter{page}{301} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% START THE DOCUMENTS
-  
+%% Select inputing only one part of the document
+%\includeonly{content/intro/intro}   % the file wihtout .tex
+%\includeonly{content/other/other_content}
+ 
 \begin{document} 
+\maketitle 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% ADD THE FRONTMATTER HERE
-\input{00_frontmatter/00_frontmatter}
+\begin{abstract}
+This document shows the desired format and appearance of a manuscript prepared for the Proceedings of the SPIE.  It contains general formatting instructions and hints about how to use LaTeX.  The LaTeX source file that produced this document, {\tt article.tex} (Version 3.3), provides a template, used in conjunction with {\tt spie.cls} (Version 3.3).  
+\end{abstract}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% ADD ALL THE SECTIONS HERE
+\keywords{Breast Ultra-Sound, Machine-Learning based Segmentation}
 
-\input{01/01}
+%% Incldue the content without .tex extension
+\include*{content/intro/intro}   % the file wihtout .tex
+\include*{content/other/other_content}
 
-\input{02/02}
+\acknowledgments     %>>>> equivalent to \section*{ACKNOWLEDGMENTS}       
+ 
+This unnumbered section is used to identify those who have aided the authors in understanding or accomplishing the work presented and to acknowledge sources of funding.  
 
-\input{03/03}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% References %%%%%
 
-\input{04/04}
-
-\input{05/05}
-
-\input{06/06}
-
-\input{07/07}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% BIBTEX AND BIBLIOGRAPHY START HERE
-
-\bibliography{./100_file_system/literature_review}   %>>>> bibliography data in report.bib
+\bibliography{./content/literature_review}   %>>>> bibliography data in report.bib
 \bibliographystyle{spiebib}   %>>>> makes bibtex use spiebib.bst
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \end{document} 

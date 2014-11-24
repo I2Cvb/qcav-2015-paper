@@ -20,7 +20,7 @@
 
 %% Latex documents that need direct input
 \input{latex/filesystem/package.tex}        % contains the latex packages
-\input{content/frontmatter.tex}             % contains the Title and Autor info
+\input{content/00_frontmatter/frontmatter.tex}             % contains the Title and Autor info
 \input{latex/filesystem/fileSetup.tex}      % contains package and variables init.
 \input{content/acronym_definition.tex}      % contains the acronims 
 
@@ -35,11 +35,14 @@
 This document shows the desired format and appearance of a manuscript prepared for the Proceedings of the SPIE.  It contains general formatting instructions and hints about how to use LaTeX.  The LaTeX source file that produced this document, {\tt article.tex} (Version 3.3), provides a template, used in conjunction with {\tt spie.cls} (Version 3.3).  
 \end{abstract}
 
-\keywords{Breast Ultra-Sound, Machine-Learning based Segmentation}
+\keywords{Gradient boosting, multi-parametric MRI, prostate cancer, computer-aided diagnosis}
 
 %% Incldue the content without .tex extension
-\include*{content/intro/intro}   % the file wihtout .tex
-\include*{content/other/other_content}
+\input{content/01_introduction/introduction}   % the file wihtout .tex
+\input{content/02_methodology/methodology}
+\input{content/03_results/results}
+\input{content/04_discussion/discussion}
+\input{content/05_conclusion/conclusion}
 
 \acknowledgments     %>>>> equivalent to \section*{ACKNOWLEDGMENTS}       
  

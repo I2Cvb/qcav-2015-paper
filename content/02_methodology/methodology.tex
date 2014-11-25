@@ -1,22 +1,88 @@
 \section{MATERIAL AND METHODS}\label{sec:methodology}
 
-
 \subsection{Data}\label{subsec:data}
 
-Here, right a paragraph on how the data were acquired and which features were extracted
+The multi-parametric \ac{mri} was acquired from a cohort of patients with higher-than-normal level of \ac{psa}. The acquisition was performed using a 3T whole body \ac{mri} scanner (Siemens Magnetom Trio TIM, Erlangen, Germany) using sequences to obtain \ac{t2w} \ac{mri}, \ac{dce} \ac{mri} and \ac{dw} \ac{mri}. Aside of the \ac{mri} examination, these patients also underwent a guided-biopsy. Finally, the dataset was composed of a total of 20 patients of which 18 patients had biopsy proven \ac{cap} and 2 patients were ``healthy'' with negative biopsies. The prostate organ as well as the prostate zones (i.e., \ac{pz} and \ac{cg}) and \ac{cap} were manually segmented by an experienced radiologist. Therefore, 13 patients had a \ac{cap} in the \ac{pz}, 3 patients had \ac{cap} in the \ac{cg}, 2 patients had invasive \ac{cap} in both \ac{pz} and \ac{cg} and finally 3 patients were considered as ``healthy''. 
 
-\subsection{Classification framework}
+The \ac{adc} maps were computed using the scanner software and the \ac{dw} \ac{mri}. The \ac{dce} \ac{mri} sequence consist in a kinetic study composed of 40 samples over time. These \ac{dce} \ac{mri} sequences and \ac{adc} maps were resampled using the spatial information of the \ac{t2w} \ac{mri} sequence with dimensions of $448 \times 360 \times 64$ and voxel spacing of $0.68 \times 0.68 \times 1.25 $ mm\textsuperscript{3}. Linear interpolation was used to compute missing data during the up-sampling. The resampling was implemented in C++ using the Insight Segmentation and Registration Toolkit~\cite{Johnson2013}.
 
-\subsubsection{Feature extraction strategies}
+\subsection{Classification framework}\label{subsec:classif}
 
-\begin{itemize}
-\item voxel-based
-\item 3d-texton-based
-\end{itemize}
+\subsubsection{Feature extraction strategies}\label{subsubsec:featextr}
 
-\subsubsection{Gradient boosting}
+\begin{table}[h]
+\caption{Overview of voxel features extracted in our classification framework.} 
+\label{tab:feat}
+\renewcommand{\arraystretch}{1.3}
+\begin{center}       
+\begin{tabular}{c|c|c|p{9cm}} %% this creates two columns
+%% |l|l| to left justify each column entry
+%% |c|c| to center each column entry
+%% use of \rule[]{}{} below opens up each row
+\hline
+Extraction strategy & Name & Size & Short description  \\
+\hline
+\hline
+\multirow{5}{*}{Voxel-based} & V\textsubscript{\ac{t2w}} & 1 & Intensity of a voxel in the \ac{t2w} \ac{mri} \\
+ & V\textsubscript{\ac{adc}} & 1 & Intensity of a voxel in the \ac{adc} map  \\
+ & V\textsubscript{\ac{dce}} & 40 & Intensities of a voxel along the whole serie in the \ac{dce} \ac{mri}  \\
+ & V\textsubscript{\ac{pz}} & 1 & Boolean value of a voxel membership to the \ac{pz} \\
+ & V\textsubscript{\ac{cg}} & 1 & Boolean value of a voxel membership to the \ac{cg} \\ 
+\hline
+\hline
+\multirow{5}{*}{3D texton-based} & T\textsubscript{\ac{t2w}} & 243 & Intensities vector for a window of $9 \times 9 \times 3$ voxels in the \ac{t2w} \ac{mri} \\
+ & T\textsubscript{\ac{adc}} & 243 & Intensities vector for a window of $9 \times 9 \times 3$ voxels in the \ac{adc} map \\
+ & T\textsubscript{\ac{dce}} & 9720 & Intensities vector for a window of $9 \times 9 \times 3$ along the whole serie in the \ac{dce} \ac{mri} \\
+ & T\textsubscript{\ac{pz}} & 243 & Boolean vector of voxels memberships to the \ac{pz} for a window of $9 \times 9 \times 3$ \\
+ & T\textsubscript{\ac{cg}} & 243 & Boolean vector of voxels memberships to the \ac{cg} for a window of $9 \times 9 \times 3$ \\
+\hline 
+\end{tabular}
+\end{center}
+\end{table}
 
-\subsection{Validation model}
+A summary of the features extracted as well as the strategies chosen are summarized in Table\,\ref{tab:feat}. Two main strategies are applied to extract features. In the voxel-based approach, at each voxel location, the intensities for the different \ac{mri} modalities are extracted as well as the membership of this voxel to belong to the \ac{pz} or \ac{cg}. The 3D texton-based approach extend this extraction for a 3D window of size $9 \times 9 \times 3$ around the central voxel. In both case, the vectors V(.) and T(.) extracted are scaled using min-max normalization.
+
+\begin{table}[h]
+\caption{Overview of the different concatenations tested for the classification.} 
+\label{tab:conc}
+\renewcommand{\arraystretch}{1.3}
+\begin{center}       
+\begin{tabular}{c||c|c|c|c|c||c|c|c|c|c} %% this creates two columns
+%% |l|l| to left justify each column entry
+%% |c|c| to center each column entry
+%% use of \rule[]{}{} below opens up each row
+\hline
+Name  & V\textsubscript{\ac{t2w}} & V\textsubscript{\ac{adc}} & V\textsubscript{\ac{dce}} & V\textsubscript{\ac{pz}} & V\textsubscript{\ac{cg}} & T\textsubscript{\ac{t2w}} & T\textsubscript{\ac{adc}} & T\textsubscript{\ac{dce}} & T\textsubscript{\ac{pz}} & T\textsubscript{\ac{cg}} \\
+\hline
+\hline
+V\textsubscript{1} & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{2} & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{3} & \xmark & \cmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{4} & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{5} & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{6} & \cmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{7} & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
+\hline 
+\hline
+T\textsubscript{1} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark \\
+T\textsubscript{2} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
+T\textsubscript{3} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
+T\textsubscript{4} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark \\
+T\textsubscript{5} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \cmark & \xmark & \xmark \\
+T\textsubscript{6} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark & \xmark \\
+T\textsubscript{7} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Then, the different concatenation of the vectors V(.) and T(.) are summarized in Table\,\ref{tab:conc}. Different combinations are further tested in order to observe the contribution of each data feature.
+
+\subsubsection{Gradient boosting}\label{subsubsec:gradboost}
+
+In this research, we use a gradient boosting classifier~\cite{Becker2013} originally proposed by Friedman~\cite{Friedman1999,Friedman2000} in order to implement the \ac{cad} for \ac{cap} detection. Gradient boosting is in fact a reformulation of the well-known AdaBoost~\cite{Freund1997} in which boosting real-valued weak learners 
+
+\subsubsection{Validation model}\label{subsubsec:valmod}
 
 k-cross validation
 

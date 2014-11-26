@@ -1,17 +1,19 @@
-\section{MATERIAL AND METHODS}\label{sec:methodology}
+\section{material and methods}\label{sec:methodology}
 
-\subsection{Data}\label{subsec:data}
+\subsection{data}\label{subsec:data}
 
-The multi-parametric \ac{mri} was acquired from a cohort of patients with higher-than-normal level of \ac{psa}. The acquisition was performed using a 3T whole body \ac{mri} scanner (Siemens Magnetom Trio TIM, Erlangen, Germany) using sequences to obtain \ac{t2w} \ac{mri}, \ac{dce} \ac{mri} and \ac{dw} \ac{mri}. Aside of the \ac{mri} examination, these patients also underwent a guided-biopsy. Finally, the dataset was composed of a total of 20 patients of which 18 patients had biopsy proven \ac{cap} and 2 patients were ``healthy'' with negative biopsies. The prostate organ as well as the prostate zones (i.e., \ac{pz} and \ac{cg}) and \ac{cap} were manually segmented by an experienced radiologist. Therefore, 13 patients had a \ac{cap} in the \ac{pz}, 3 patients had \ac{cap} in the \ac{cg}, 2 patients had invasive \ac{cap} in both \ac{pz} and \ac{cg} and finally 3 patients were considered as ``healthy''. 
+the multi-parametric \ac{mri} was acquired from a cohort of patients with higher-than-normal level of \ac{psa}. the acquisition was performed using a 3t whole body \ac{mri} scanner (siemens magnetom trio tim, erlangen, germany) using sequences to obtain \ac{t2w} \ac{mri}, \ac{dce} \ac{mri} and \ac{dw} \ac{mri}. aside of the \ac{mri} examination, these patients also underwent a guided-biopsy. finally, the dataset was composed of a total of 20 patients of which 18 patients had biopsy proven \ac{cap} and 2 patients were ``healthy'' with negative biopsies. the prostate organ as well as the prostate zones (i.e., \ac{pz} and \ac{cg}) and \ac{cap} were manually segmented by an experienced radiologist. therefore, 13 patients had a \ac{cap} in the \ac{pz}, 3 patients had \ac{cap} in the \ac{cg}, 2 patients had invasive \ac{cap} in both \ac{pz} and \ac{cg} and finally 3 patients were considered as ``healthy''. 
 
-The \ac{adc} maps were computed using the scanner software and the \ac{dw} \ac{mri}. The \ac{dce} \ac{mri} sequence consist in a kinetic study composed of 40 samples over time. These \ac{dce} \ac{mri} sequences and \ac{adc} maps were resampled using the spatial information of the \ac{t2w} \ac{mri} sequence with dimensions of $448 \times 360 \times 64$ and voxel spacing of $0.68 \times 0.68 \times 1.25 $ mm\textsuperscript{3}. Linear interpolation was used to compute missing data during the up-sampling. The resampling was implemented in C++ using the Insight Segmentation and Registration Toolkit~\cite{Johnson2013}.
+the \ac{adc} maps were computed using the scanner software and the \ac{dw} \ac{mri}. the \ac{dce} \ac{mri} sequence consist in a kinetic study composed of 40 samples over time. these \ac{dce} \ac{mri} sequences and \ac{adc} maps were resampled using the spatial information of the \ac{t2w} \ac{mri} sequence with dimensions of $448 \times 360 \times 64$ and voxel spacing of $0.68 \times 0.68 \times 1.25 $ mm\textsuperscript{3}. linear interpolation was used to compute missing data during the up-sampling. the resampling was implemented in c++ using the insight segmentation and registration toolkit~\cite{johnson2013}.
 
-\subsection{Classification framework}\label{subsec:classif}
+due to the large number of samples available at a voxel scale, the dataset was pre-processed in order to deal with a balanced dataset allowing to not bias the results. therefore, all the positive samples (i.e., \ac{cap} voxels) were stored and an equal number of negative samples (i.e., ``healthy'' voxels) were randomly selected from the larger original pool. thus, the total amount of positive and negative samples considered in our experiments accounted for 218,422 voxels.
 
-\subsubsection{Feature extraction strategies}\label{subsubsec:featextr}
+\subsection{classification framework}\label{subsec:classif}
+
+\subsubsection{feature extraction strategies}\label{subsubsec:featextr}
 
 \begin{table}[h]
-\caption{Overview of voxel features extracted in our classification framework.} 
+\caption{overview of voxel features extracted in our classification framework.} 
 \label{tab:feat}
 \renewcommand{\arraystretch}{1.3}
 \begin{center}       
@@ -20,10 +22,10 @@ The \ac{adc} maps were computed using the scanner software and the \ac{dw} \ac{m
 %% |c|c| to center each column entry
 %% use of \rule[]{}{} below opens up each row
 \hline
-Extraction strategy & Name & Size & Short description  \\
+extraction strategy & name & size & short description  \\
 \hline
 \hline
-\multirow{5}{*}{Voxel-based} & V\textsubscript{\ac{t2w}} & 1 & Intensity of a voxel in the \ac{t2w} \ac{mri} \\
+\multirow{5}{*}{voxel-based} & v\textsubscript{\ac{t2w}} & 1 & Intensity of a voxel in the \ac{t2w} \ac{mri} \\
  & V\textsubscript{\ac{adc}} & 1 & Intensity of a voxel in the \ac{adc} map  \\
  & V\textsubscript{\ac{dce}} & 40 & Intensities of a voxel along the whole serie in the \ac{dce} \ac{mri}  \\
  & V\textsubscript{\ac{pz}} & 1 & Boolean value of a voxel membership to the \ac{pz} \\
@@ -80,7 +82,7 @@ Then, the different concatenation of the vectors V(.) and T(.) are summarized in
 
 \subsubsection{Gradient boosting}\label{subsubsec:gradboost}
 
-In this research, we use a gradient boosting classifier~\cite{Becker2013} originally proposed by Friedman~\cite{Friedman1999,Friedman2000} in order to implement the \ac{cad} for \ac{cap} detection. Gradient boosting is in fact a reformulation of the well-known AdaBoost~\cite{Freund1997} in which boosting real-valued weak learners 
+In this research, a gradient boosting classifier~\cite{Becker2013} originally proposed by Friedman~\cite{Friedman1999,Friedman2000} was used to implement our \ac{cad} system for \ac{cap}. Gradient boosting is in fact a reformulation of the well-known AdaBoost~\cite{Freund1997} in which the problem of finding ``boots'' is tackled as a numerical optimization. In a greedy manner, a strong classifier is constructed by iteratively finding the best pair of real-valued weak learner function (e.g., regression trees) and its corresponding weight which minimize a given differentiable loss function. This minimization can be carried out via gradient descent or quadratic approximation~\cite{Zheng2008}.
 
 \subsubsection{Validation model}\label{subsubsec:valmod}
 

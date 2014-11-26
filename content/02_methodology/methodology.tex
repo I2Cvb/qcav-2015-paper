@@ -2,7 +2,7 @@
 
 \subsection{data}\label{subsec:data}
 
-the multi-parametric \ac{mri} was acquired from a cohort of patients with higher-than-normal level of \ac{psa}. the acquisition was performed using a 3t whole body \ac{mri} scanner (siemens magnetom trio tim, erlangen, germany) using sequences to obtain \ac{t2w} \ac{mri}, \ac{dce} \ac{mri} and \ac{dw} \ac{mri}. aside of the \ac{mri} examination, these patients also underwent a guided-biopsy. finally, the dataset was composed of a total of 20 patients of which 18 patients had biopsy proven \ac{cap} and 2 patients were ``healthy'' with negative biopsies. the prostate organ as well as the prostate zones (i.e., \ac{pz} and \ac{cg}) and \ac{cap} were manually segmented by an experienced radiologist. therefore, 13 patients had a \ac{cap} in the \ac{pz}, 3 patients had \ac{cap} in the \ac{cg}, 2 patients had invasive \ac{cap} in both \ac{pz} and \ac{cg} and finally 3 patients were considered as ``healthy''. 
+the multi-parametric \ac{mri} was acquired from a cohort of patients with higher-than-normal level of \ac{psa}. the acquisition was performed using a 3t whole body \ac{mri} scanner (siemens magnetom trio tim, erlangen, germany) using sequences to obtain \ac{t2w} \ac{mri}, \ac{dce} \ac{mri} and \ac{dw} \ac{mri}. aside of the \ac{mri} examination, these patients also underwent a guided-biopsy. finally, the dataset was composed of a total of 20 patients of which 18 patients had biopsy proven \ac{cap} and 2 patients were ``healthy'' with negative biopsies. the prostate organ as well as the prostate zones (i.e., \ac{pz} and \ac{cg}) and \ac{cap} were manually segmented by an experienced radiologist. therefore, 13 patients had a \ac{cap} in the \ac{pz}, 3 patients had \ac{cap} in the \ac{cg}, 2 patients had invasive \ac{cap} in both \ac{pz} and \ac{cg} and finally 2 patients were considered as ``healthy''. 
 
 the \ac{adc} maps were computed using the scanner software and the \ac{dw} \ac{mri}. the \ac{dce} \ac{mri} sequence consist in a kinetic study composed of 40 samples over time. these \ac{dce} \ac{mri} sequences and \ac{adc} maps were resampled using the spatial information of the \ac{t2w} \ac{mri} sequence with dimensions of $448 \times 360 \times 64$ and voxel spacing of $0.68 \times 0.68 \times 1.25 $ mm\textsuperscript{3}. linear interpolation was used to compute missing data during the up-sampling. the resampling was implemented in c++ using the insight segmentation and registration toolkit~\cite{johnson2013}.
 
@@ -45,34 +45,26 @@ extraction strategy & name & size & short description  \\
 A summary of the features extracted as well as the strategies chosen are summarized in Table\,\ref{tab:feat}. Two main strategies are applied to extract features. In the voxel-based approach, at each voxel location, the intensities for the different \ac{mri} modalities are extracted as well as the membership of this voxel to belong to the \ac{pz} or \ac{cg}. The 3D texton-based approach extend this extraction for a 3D window of size $9 \times 9 \times 3$ around the central voxel. In both case, the vectors V(.) and T(.) extracted are scaled using min-max normalization.
 
 \begin{table}[h]
-\caption{Overview of the different concatenations tested for the classification.} 
+\caption{Overview of the different combinations of features tested for the classification.} 
 \label{tab:conc}
 \renewcommand{\arraystretch}{1.3}
 \begin{center}       
-\begin{tabular}{c||c|c|c|c|c||c|c|c|c|c} %% this creates two columns
+\begin{tabular}{c|ccccc||c|ccccc} %% this creates two columns
 %% |l|l| to left justify each column entry
 %% |c|c| to center each column entry
 %% use of \rule[]{}{} below opens up each row
 \hline
-Name  & V\textsubscript{\ac{t2w}} & V\textsubscript{\ac{adc}} & V\textsubscript{\ac{dce}} & V\textsubscript{\ac{pz}} & V\textsubscript{\ac{cg}} & T\textsubscript{\ac{t2w}} & T\textsubscript{\ac{adc}} & T\textsubscript{\ac{dce}} & T\textsubscript{\ac{pz}} & T\textsubscript{\ac{cg}} \\
+Voxel-based  & V\textsubscript{\ac{t2w}} & V\textsubscript{\ac{adc}} & V\textsubscript{\ac{dce}} & V\textsubscript{\ac{pz}} & V\textsubscript{\ac{cg}} & Texton-based & T\textsubscript{\ac{t2w}} & T\textsubscript{\ac{adc}} & T\textsubscript{\ac{dce}} & T\textsubscript{\ac{pz}} & T\textsubscript{\ac{cg}} \\
 \hline
 \hline
-V\textsubscript{1} & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-V\textsubscript{2} & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-V\textsubscript{3} & \xmark & \cmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-V\textsubscript{4} & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-V\textsubscript{5} & \cmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-V\textsubscript{6} & \cmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-V\textsubscript{7} & \cmark & \cmark & \cmark & \cmark & \cmark & \xmark & \xmark & \xmark & \xmark & \xmark \\
-\hline 
-\hline
-T\textsubscript{1} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark \\
-T\textsubscript{2} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark \\
-T\textsubscript{3} & \xmark & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark \\
-T\textsubscript{4} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \xmark & \xmark & \xmark \\
-T\textsubscript{5} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \xmark & \cmark & \xmark & \xmark \\
-T\textsubscript{6} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark & \xmark & \xmark & \xmark \\
-T\textsubscript{7} & \xmark & \xmark & \xmark & \xmark & \xmark & \cmark & \cmark & \cmark & \cmark & \cmark \\
+V\textsubscript{1} & \cmark & \xmark & \xmark & \xmark & \xmark & T\textsubscript{1} & \cmark & \xmark & \xmark & \xmark & \xmark \\
+V\textsubscript{2} & \xmark & \cmark & \xmark & \xmark & \xmark & T\textsubscript{2} & \xmark & \cmark & \xmark & \xmark & \xmark \\
+V\textsubscript{3} & \xmark & \xmark & \cmark & \xmark & \xmark & T\textsubscript{3} & \xmark & \xmark & \cmark & \xmark & \xmark \\
+V\textsubscript{4} & \cmark & \cmark & \xmark & \xmark & \xmark & T\textsubscript{4} & \cmark & \cmark & \xmark & \xmark & \xmark \\
+V\textsubscript{5} & \cmark & \xmark & \cmark & \xmark & \xmark & T\textsubscript{5} & \cmark & \xmark & \cmark & \xmark & \xmark \\
+V\textsubscript{6} & \xmark & \cmark & \cmark & \xmark & \xmark & T\textsubscript{6} & \xmark & \cmark & \cmark & \xmark & \xmark \\
+V\textsubscript{7} & \cmark & \cmark & \cmark & \xmark & \xmark & T\textsubscript{7} & \cmark & \cmark & \cmark & \xmark & \xmark \\
+V\textsubscript{8} & \cmark & \cmark & \cmark & \cmark & \cmark & T\textsubscript{8} & \cmark & \cmark & \cmark & \cmark & \cmark \\
 \hline
 \end{tabular}
 \end{center}
@@ -86,7 +78,7 @@ In this research, a gradient boosting classifier~\cite{Becker2013} originally pr
 
 \subsubsection{Validation model}\label{subsubsec:valmod}
 
-k-cross validation
+All the different combinations reported in Table\,\ref{tab:conc} were classified using a ten-fold cross-validation procedure, of which nine-fold were used as training samples and one-fold was kept as testing samples and the experiments were repeated for ten iterations. 
 
 %%% Local Variables: 
 %%% mode: latex

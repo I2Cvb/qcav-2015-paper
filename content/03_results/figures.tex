@@ -1,26 +1,26 @@
 %% Figure 1
 \begin{figure}[t]
 %%Figure1a
-\subfloat[RF ensemble, individual features]{ 
+\subfloat[Voxel-based features]{\label{fig:voxres}
 \hspace{0.8cm}
-\begin{tikzpicture} [scale=.65,every node/.style={scale=0.65}]  %[scale=.68]
+\begin{tikzpicture} [scale=.85,every node/.style={scale=0.85}]  %[scale=.68]
 
 \def\labels{
-{\color{red}$V_{1}$}, 
-{\color{red}$V_{2}$}, 
-{\color{red}$V_{3}$},  
-{\color{red}$V_{4}$},
-{\color{red}$V_{5}$},
-{\color{red}$V_{6}$},
-{\color{red}$V_{7}$},
-{\color{red}$V_{8}$}
+{\color{green}$V_{1}$}, 
+{\color{green}$V_{2}$}, 
+{\color{green}$V_{3}$},  
+{\color{green}$V_{4}$},
+{\color{green}$V_{5}$},
+{\color{green}$V_{6}$},
+{\color{green}$V_{7}$},
+{\color{green}$V_{8}$}
  }
 
-\def\reward{71.3,67.8,74.7,74.1,73.4,67.8,75.1,76.6}
-\def\spec{69.8,54.6,69.3,42.1,69.4,57.6,69.9,73.4}
+\def\reward{74.1,67.8,71.3,67.8,73.4,74.7,75.1,76.6}
+\def\spec{42.1,54.6,69.8,57.6,69.4,69.3,69.9,73.4}
 \def\cZoom{2.5} 
 \def\percentageLabelAngle{10}
-\def\nbeams{9}
+\def\nbeams{8}
 \pgfmathsetmacro\beamAngle{(360/\nbeams)}
 \pgfmathsetmacro\halfAngle{(180/\nbeams)}
 
@@ -51,7 +51,7 @@
 
 \def\auxx{{\spec}}
 \pgfmathsetmacro\origin{\auxx[\nbeams-1]} 
-\draw [black, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \spec { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) };
+\draw [red, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \spec { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) };
 
 
 \foreach \n [count=\ni] in \reward 
@@ -59,13 +59,12 @@
   \pgfmathsetmacro\cAngle{{(\ni*(360/\nbeams))+\globalRotation}}
   \pgfmathsetmacro\nreward{\aux[\ni-1]}
   \pgfmathsetmacro\nspec{\auxx[\ni-1]}
-  \draw (\cAngle:{\cZoom*1.36}) node[align=center] {{\color{blue}\nreward $\%$ } \\{ \color{black}\nspec $\%$}};
+  \draw (\cAngle:{\cZoom*1.36}) node[align=center] {{\color{blue}\nreward $\%$ } \\{ \color{red}\nspec $\%$}};
 };
 
 %%%% draw the domain of each class 
-\def\puta{5/0/{Texture},
-  3/5/{Color},
-  1/8/{Shape}}
+\def\puta{3/0/{Mono-parametric},
+  5/3/{Multi-parametric}}
 \foreach \numElm/\contadorQueNoSeCalcular/\name [count=\ni] in \puta
  {
 
@@ -79,27 +78,27 @@
     
   }  
 \end{tikzpicture} 
-}\hfil
+}\hfill
 %%Figure1b
-\subfloat[LC ensemble, individual features]{
-\begin{tikzpicture} [scale=.65,every node/.style={scale=0.65}]  %[scale=.68]
+\subfloat[3D texton-based features]{\label{fig;texres}
+\begin{tikzpicture} [scale=.85,every node/.style={scale=0.85}]  %[scale=.68]
 
 \def\labels{
-{\color{red}$T_{1}$}, 
-{\color{red}$T_{2}$}, 
-{\color{red}$T_{3}$},  
-{\color{red}$T_{4}$},
-{\color{red}$T_{5}$},
-{\color{red}$T_{6}$},
-{\color{red}$T_{7}$},
-{\color{red}$T_{8}$}
+{\color{green}$T_{1}$}, 
+{\color{green}$T_{2}$}, 
+{\color{green}$T_{3}$},  
+{\color{green}$T_{4}$},
+{\color{green}$T_{5}$},
+{\color{green}$T_{6}$},
+{\color{green}$T_{7}$},
+{\color{green}$T_{8}$}
  }
 
-\def\reward{82.7,75.7,84.6,74.6,84.7}
-\def\spec{69.8,54.6,69.3,42.1,69.4,57.6,69.9,73.4}
+\def\reward{74.6,75.7,82.7,78.2,84.7,84.6,85.3,86.9}
+\def\spec{60.6,64.1,81.6,67.3,81.2,82.2,81.4,84.6}
 \def\cZoom{2.5} 
 \def\percentageLabelAngle{10}
-\def\nbeams{9}
+\def\nbeams{8}
 \pgfmathsetmacro\beamAngle{(360/\nbeams)}
 \pgfmathsetmacro\halfAngle{(180/\nbeams)}
 
@@ -132,7 +131,7 @@
 
 \def\auxx{{\spec}}
 \pgfmathsetmacro\origin{\auxx[\nbeams-1]} 
-\draw [black, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \spec { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) };
+\draw [red, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \spec { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) };
 
 % label all the percentags
 \foreach \n [count=\ni] in \reward 
@@ -140,180 +139,12 @@
   \pgfmathsetmacro\cAngle{{(\ni*(360/\nbeams))+\globalRotation}}
   \pgfmathsetmacro\nreward{\aux[\ni-1]}
   \pgfmathsetmacro\nspec{\auxx[\ni-1]}
-  \draw (\cAngle:{\cZoom*1.36}) node[align=center] {{\color{blue}\nreward $\%$ } \\{ \color{black}\nspec $\%$}};
+  \draw (\cAngle:{\cZoom*1.36}) node[align=center] {{\color{blue}\nreward $\%$ } \\{ \color{red}\nspec $\%$}};
 };
 
 %%% draw the domain of each class 
-\def\puta{5/0/{Texture},
-  3/5/{Color},
-  1/8/{Shape}}
-\foreach \numElm/\contadorQueNoSeCalcular/\name [count=\ni] in \puta
- {
-   \pgfmathsetmacro\initialAngle{(\contadorQueNoSeCalcular*\beamAngle)+\halfAngle+\globalRotation}
-   \pgfmathsetmacro\finalAngle  {((\numElm+\contadorQueNoSeCalcular)*\beamAngle)+\halfAngle+\globalRotation}
-   \pgfmathsetmacro\l  {\cZoom*1.5+.3pt}
-   \draw (\initialAngle:{\cZoom*1.6}) -- (\initialAngle:{\cZoom*1.1});
-   \draw [ |<->|,>=latex] (\initialAngle:\l) arc (\initialAngle:\finalAngle:\l) ;     
-   \pgfmathsetmacro\r  {\cZoom*1.5+.45pt}
-   {\draw [decoration={text along path,  text={\name},text align={center}},decorate] (\finalAngle:\r) arc (\finalAngle:\initialAngle:\r);}     
-  }  
-\end{tikzpicture}
-}\\
-%%Figure1c
-\subfloat[RF ensemble, combined features]{ 
-\begin{tikzpicture} [scale=.65,every node/.style={scale=0.65}]  %[scale=.68]
-
-\def\labels{
-{\color{red}\footnotesize{$T_{1,2,3,4}$}}, 
-{\color{red}\footnotesize{$C_{1,2}$}}, 
-{\color{red}\footnotesize{$C_{1}$,$C_{2}$,$B$}}, 
-{\color{red}\footnotesize{$T_{3}$,$C_{2}$}},  
-{\color{red}\footnotesize{$T_{1}$,$C_{1,2}$}}, 
-{\color{red}\footnotesize{$T_{3}$,$C_{1,2}$}}, 
-{\color{red}\footnotesize{$T_{4}$,$C_{1,2}$}},
-{\color{red}\footnotesize{$T_{1,3}$,$C_{1,2}$}},
-{\color{red}\footnotesize{$T_{1,2,3,4},C_{1,2}$}},
-{\color{red}\footnotesize{$T_{1,2,3},C_{1,2},B$}},
-{\color{red}\footnotesize{All}},
-{\color{green}\cite{barata2013two}},
-{\color{green}\cite{barata2013two}}
- }
- 
-\def\reward{90.60,93.16,90.60,94.02,93.16,89.74,89.74,92.31,91.45,91.45,91.45,93,90}
-\def\spec{92.21,94.16,94.81,92.21,93.51,95.45,92.86,93.51,94.16,94.16,93.51,78,89}
-\def\cZoom{3.5} 
-\def\percentageLabelAngle{10}
-\def\nbeams{13}
-\pgfmathsetmacro\beamAngle{(360/\nbeams)}
-\pgfmathsetmacro\halfAngle{(180/\nbeams)}
-
-\pgfmathsetmacro\globalRotation{\halfAngle}
-
-\foreach \n  [count=\ni] in \labels
-{
-\pgfmathsetmacro\cAngle{{(\ni*(360/\nbeams))+\globalRotation}}
-\draw(\cAngle:{\cZoom*1.08})  node[fill=white] {\n};
-\draw [thin] (0,0) -- (\cAngle:{\cZoom*0.9}) ;
-
-}
-
-%% draw the % rings 
-\foreach \x in {12.5,25, ...,100} 
-\draw [thin,color=gray!50] (0,0) circle [radius={\cZoom*\x/110}];
-
-\foreach \x in {50,75,100}
-{ 
-     \draw [thin,color=black!50] (0,0) circle [radius={\cZoom/110*\x}];
-     \foreach \a in {0, 180} \draw ({\percentageLabelAngle+\a}:{\cZoom*0.01*\x}) node  [inner sep=0pt,outer sep=0pt,fill=white,font=\fontsize{3}{3.5}\selectfont]{$\x\%$};
-}
-
-%% draw the path of the percentages
-\def\aux{{\reward}}
-\pgfmathsetmacro\origin{\aux[\nbeams-1]} 
-\draw [blue, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \reward { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) } ;
-
-\def\auxx{{\spec}}
-\pgfmathsetmacro\origin{\auxx[\nbeams-1]} 
-\draw [black, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \spec { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) };
-
-
-\foreach \n [count=\ni] in \reward 
-{
-  \pgfmathsetmacro\cAngle{{(\ni*(360/\nbeams))+\globalRotation}}
-  \pgfmathsetmacro\nreward{\aux[\ni-1]}
-  \pgfmathsetmacro\nspec{\auxx[\ni-1]}
-  \draw (\cAngle:{\cZoom*1.38}) node[align=center] {{\color{blue}\nreward $\%$ } \\{ \color{black}\nspec $\%$}};
-};
-
-%%%% draw the domain of each class 
-\def\puta{11/0/{Combined Features},
-  2/11/{Benchmark}}
-\foreach \numElm/\contadorQueNoSeCalcular/\name [count=\ni] in \puta
- {
-
-   \pgfmathsetmacro\initialAngle{(\contadorQueNoSeCalcular*\beamAngle)+\halfAngle+\globalRotation}
-   \pgfmathsetmacro\finalAngle  {((\numElm+\contadorQueNoSeCalcular)*\beamAngle)+\halfAngle+\globalRotation}
-   \pgfmathsetmacro\l  {\cZoom*1.5+.3pt}
-   \draw (\initialAngle:{\cZoom*1.6}) -- (\initialAngle:{\cZoom*1.1});
-   \draw [ |<->|,>=latex] (\initialAngle:\l) arc (\initialAngle:\finalAngle:\l) ;     
-   \pgfmathsetmacro\r  {\cZoom*1.5+.45pt}
-   {\draw [decoration={text along path,  text={\name},text align={center}},decorate] (\finalAngle:\r) arc (\finalAngle:\initialAngle:\r);} 
-    
-  }  
-\end{tikzpicture} 
-}\hfil
-%%Figure1d
-\subfloat[LC ensemble, combined features]{
-\begin{tikzpicture} [scale=.65,every node/.style={scale=0.65}]  %[scale=.68]
-
-\def\labels{
-{\color{red}\footnotesize{$T_{1,2,3,4}$}}, 
-{\color{red}\footnotesize{$C_{1,2}$}}, 
-{\color{red}\footnotesize{$C_{1}$,$C_{2}$,$B$}}, 
-{\color{red}\footnotesize{$T_{3}$,$C_{2}$}},  
-{\color{red}\footnotesize{$T_{1}$,$C_{1,2}$}}, 
-{\color{red}\footnotesize{$T_{3}$,$C_{1,2}$}}, 
-{\color{red}\footnotesize{$T_{4}$,$C_{1,2}$}},
-{\color{red}\footnotesize{$T_{1,3}$,$C_{1,2}$}},
-{\color{red}\footnotesize{$T_{1,2,3,4},C_{1,2}$}},
-{\color{red}\footnotesize{$T_{1,2,3},C_{1,2},B$}},
-{\color{red}\footnotesize{All}},
-{\color{green}\cite{barata2013two}},
-{\color{green}\cite{barata2013two}}
- }
-
-
-\def\reward{86.32,76.07,81.74,70.94,75.21,86.32,88.03,67.54,89.74,92.31,88.89,93,90}
-\def\spec{ 92.16,94.16,92.21,90.91,94.81,94.81,92.21,93.51,93.51,92.86,94.16,78,89}
-\def\cZoom{3.5} 
-\def\percentageLabelAngle{10}
-\def\nbeams{13}
-\pgfmathsetmacro\beamAngle{(360/\nbeams)}
-\pgfmathsetmacro\halfAngle{(180/\nbeams)}
-
-\pgfmathsetmacro\globalRotation{\halfAngle}
-
-\foreach \n  [count=\ni] in \labels
-{
-\pgfmathsetmacro\cAngle{{(\ni*(360/\nbeams))+\globalRotation}}
-\draw(\cAngle:{\cZoom*1.08})  node[fill=white] {\n};
-\draw [thin] (0,0) -- (\cAngle:{\cZoom*0.9}) ;
-
-}
-
-% draw the % rings 
-\foreach \x in {12.5,25, ...,100} 
-\draw [thin,color=gray!50] (0,0) circle [radius={\cZoom*\x/110}];
-
-\foreach \x in {50,75,100}
-{ 
-     \draw [thin,color=black!50] (0,0) circle [radius={\cZoom/110*\x}];
-     \foreach \a in {0, 180} \draw ({\percentageLabelAngle+\a}:{\cZoom*0.01*\x}) node  [inner sep=0pt,outer sep=0pt,fill=white,font=\fontsize{3}{3.5}\selectfont]{$\x\%$};
-}
-
-
-% draw the path of the percentages
-\def\aux{{\reward}}
-\pgfmathsetmacro\origin{\aux[\nbeams-1]} 
-\draw [blue, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \reward { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) } ;
-
-
-\def\auxx{{\spec}}
-\pgfmathsetmacro\origin{\auxx[\nbeams-1]} 
-\draw [black, thick] (\globalRotation:{\cZoom*\origin/110}) \foreach \n  [count=\ni] in \spec { -- ({(\ni*(360/\nbeams))+\globalRotation}:{\cZoom*\n/110}) };
-
-% label all the percentags
-\foreach \n [count=\ni] in \reward 
-{
-  \pgfmathsetmacro\cAngle{{(\ni*(360/\nbeams))+\globalRotation}}
-  \pgfmathsetmacro\nreward{\aux[\ni-1]}
-  \pgfmathsetmacro\nspec{\auxx[\ni-1]}
-  \draw (\cAngle:{\cZoom*1.38}) node[align=center] {{\color{blue}\nreward $\%$ } \\{ \color{black}\nspec $\%$}};
-};
-
-%%% draw the domain of each class 
-\def\puta{11/0/{Combined Features},
-  2/11/{Benchmark}}
+\def\puta{3/0/{Mono-parametric},
+  5/3/{Multi-parametric}}
 \foreach \numElm/\contadorQueNoSeCalcular/\name [count=\ni] in \puta
  {
    \pgfmathsetmacro\initialAngle{(\contadorQueNoSeCalcular*\beamAngle)+\halfAngle+\globalRotation}
@@ -326,9 +157,8 @@
   }  
 \end{tikzpicture}
 }
-
-\caption{The classification results of the RF and LC ensembles in comparison with the benchmark {\color{green}\cite{barata2013two}}. The first row represent the results obtained using individual features while the second row shows the results of classification using combination of several features. The features are presented in in {\color{red} red}, while the results in terms of sensitivity and specificity are illustrated in {\color{blue}blue} and black, respectively} 
-\label{fig:Results1}
+\caption{Comparison between the combination of features introduced in Table~\ref{tab:conc} in terms of sensitivity and specificity are illustrated in {\color{blue}blue} and {\color{red}red}, respectively.} 
+\label{fig:result}
 \end{figure}
 
 %%% Local Variables: 

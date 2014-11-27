@@ -42,7 +42,7 @@ Extraction strategy & Name & Size & Short description  \\
 \end{center}
 \end{table}
 
-A summary of the features extracted as well as the strategies chosen are summarized in Table~\ref{tab:feat}. Two main strategies are applied to extract features. In the voxel-based approach, at each voxel location, the intensities for the different \ac{mri} modalities are extracted as well as the membership of this voxel to belong to the \ac{pz} or \ac{cg}. The 3D texton-based approach extend this extraction for a 3D window of size $9 \times 9 \times 3$ around the central voxel. In both case, the vectors V(.) and T(.) extracted are scaled using min-max normalization.
+A summary of the extracted features as well as the chosen strategies are summarized in Table~\ref{tab:feat}. Two main strategies are applied to extract features. In the voxel-based approach, at each voxel location, the intensities for the different \ac{mri} modalities are extracted as well as the membership of this voxel to belong to the \ac{pz} or \ac{cg}. The 3D texton-based approach extend this extraction for a 3D window of size $9 \times 9 \times 3$ around the central voxel. In both case, the vectors V(.) and T(.) extracted are scaled using min-max normalization.
 
 \begin{table}[h]
 \caption{Overview of the different combinations of features tested for the classification.} 

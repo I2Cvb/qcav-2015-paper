@@ -74,7 +74,7 @@ Then, the different concatenation of the vectors V(.) and T(.) are summarized in
 
 \subsubsection{Gradient boosting}\label{subsubsec:gradboost}
 
-In this research, a gradient boosting classifier~\cite{Becker2013} originally proposed by Friedman~\cite{Friedman1999,Friedman2000} is used for the implementation of our \ac{cad} system for \ac{cap}. Gradient boosting is in fact a reformulation of the well-known AdaBoost~\cite{Freund1997} in which the problem of finding ``boots'' is tackled as a numerical optimization. In a greedy manner, a strong classifier is constructed by iteratively finding the best pair of real-valued weak learner function (e.g., regression trees) and its corresponding weight which minimize a given differentiable loss function. This minimization can be carried out via gradient descent or quadratic approximation~\cite{Zheng2008}.
+In this research, a gradient boosting classifier~\cite{Becker2013} originally proposed by Friedman~\cite{Friedman1999,Friedman2000} is used for the implementation of our \ac{cad} system for \ac{cap}. Gradient boosting is in fact a reformulation of the well-known AdaBoost~\cite{Freund1997} in which the problem of finding ``boots'' is tackled as a numerical optimization. In a greedy manner, a strong classifier is constructed by iteratively finding the best pair of real-valued weak learner function (e.g., regression trees) and its corresponding weight which minimizes a given differentiable loss function. This minimization can be carried out via gradient descent or quadratic approximation~\cite{Zheng2008}.
 
 In this work, the weak learner function used is the regression trees while the loss function is an exponential loss.
 
